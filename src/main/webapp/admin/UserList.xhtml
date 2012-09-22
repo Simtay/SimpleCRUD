@@ -1,0 +1,164 @@
+<ui:composition template="/templates/layout.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui">
+     <ui:define name="content">
+         <h:form id="form" onLoad="reset()">
+                <p:dataTable id="dataTable" var="user" value="#{userController.lazyModel}" styleClass="userDataTableStyle"
+                        paginator="true" rows="10" selection="#{userController.selectedUsers}"
+                        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                        lazy="true" rowsPerPageTemplate="10,15,50">
+                <f:facet name="header">
+                    User List
+                </f:facet>  
+                <p:column selectionMode="multiple" style="width:18px" />  
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Username" />
+                    </f:facet>
+                    <p:commandLink value="#{user.username}" update=":userDetailForm:display" oncomplete="userDialog.show()"  title="View">
+                        <f:setPropertyActionListener value="#{user}" target="#{userController.selectedUser}" />    
+                    </p:commandLink>
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Firstname" />
+                    </f:facet>
+                    <h:outputText value="#{user.firstname}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Lastname" />
+                    </f:facet>
+                    <h:outputText value="#{user.lastname}" />
+                </p:column>
+
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Email" />
+                    </f:facet>
+                    <h:outputText value="#{user.email}" />
+                </p:column>
+               <!--  <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Role name" />
+                    </f:facet>
+                    <h:outputText value="#{user.role.rolename}" /> 
+                </p:column> -->
+               <f:facet name="footer">
+                    <p:commandButton value="New User" oncomplete="newUserDialog.show()" icon="ui-icon-star" title="Creates new user"/>
+                    <p:commandButton value="Delete Users" actionListener="#{userController.doDeleteUsers}" update="dataTable" icon="ui-icon-trash"/>
+                </f:facet>
+            </p:dataTable>
+         </h:form>   
+         
+             
+             <p:dialog header="User Detail" widgetVar="userDialog" resizable="false" id="userDlg" > 
+               <h:form id="userDetailForm">
+                <p:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">   
+			<h:outputText value="Username :"></h:outputText>
+                        <h:outputText value="#{userController.selectedUser.username}" />
+
+			<h:outputText value="First name :"></h:outputText>
+                        <h:inputText value="#{userController.selectedUser.firstname}" required="true" requiredMessage="Please Enter Name!"/>
+
+			<h:outputText value="Last name :"></h:outputText>
+                        <h:inputText value="#{userController.selectedUser.lastname}" required="true" requiredMessage="Please Enter Lastname!"/>
+
+			<h:outputText value="Email :"></h:outputText>
+			<h:inputText value="#{userController.selectedUser.email}"/>
+                        
+                        <h:outputText value="Role :"></h:outputText>                        
+                        <p:selectManyMenu  id="newUserRole" required="true" value="#{userController.selectedUser.roles}" var="_role" itemValue="#{_role}" requiredMessage="A Role must be chosen!">
+                            <f:selectItems  value="#{userController.roleList}"  var="_role" itemValue="#{_role}" itemLabel="#{_role.rolename}"></f:selectItems>                               
+                            <f:converter converterId="com.nz.util.ObjectConverter" />
+                        </p:selectManyMenu>
+
+			<h:outputText value="Street Name :"></h:outputText>
+			<h:inputText value="#{userController.selectedUser.address.street}"/>
+
+			<h:outputText value="Suburb :"></h:outputText>
+			<h:inputText value="#{userController.selectedUser.address.suburb}"/>
+
+			<h:outputText value="City :"></h:outputText>
+			<h:inputText value="#{userController.selectedUser.address.city}"/>
+
+			<h:outputText value="Country :"></h:outputText>
+			<h:inputText value="#{userController.selectedUser.address.country}" />
+                    <f:facet name="footer">
+                            <p:commandButton value="Update" update=":form:dataTable, :growl"  oncomplete="handleSubmitRequest(xhr, status, args, 'userDlg','newUserForm'); " actionListener="#{userController.doUpdateUser}"/>
+                    </f:facet>
+                </p:panelGrid> 
+             </h:form>
+          </p:dialog> 
+                         
+             
+          <p:dialog header="Create New User" widgetVar="newUserDialog" resizable="false" id="newUserDlg" > 
+              <h:form id="newUserForm">
+                <p:panelGrid id="displayNewUser" columns="2" cellpadding="4" style="margin:0 auto;">   
+			<h:outputText value="Username :"></h:outputText>
+                        <p:inputText value="#{userController.newUser.username}" required="true" requiredMessage="Please Enter Username!"/>
+
+			<h:outputText value="First name :"></h:outputText>
+                        <p:inputText value="#{userController.newUser.firstname}" required="true" requiredMessage="Please Enter Name!" />
+
+			<h:outputText value="Last name :"></h:outputText>
+                        <p:inputText value="#{userController.newUser.lastname}" required="true" requiredMessage="Please Enter Lastname!" />
+
+                        <h:outputText value="Password :"></h:outputText>
+                        <p:inputText value="#{userController.newUser.password}" required="true" requiredMessage="Please Enter Password!" maxlength="16" >
+                            <f:converter converterId="com.nz.util.SHAConverter"></f:converter>
+                        </p:inputText>
+
+			<h:outputText value="Email :"></h:outputText>
+			<p:inputText value="#{userController.newUser.email}"/>
+                        
+                        <h:outputText value="Role :"></h:outputText>                        
+                         <p:selectManyMenu  id="newUserRole" required="true"  value="#{userController.newUser.roles}" var="_role" itemValue="#{_role}" requiredMessage="A Role must be chosen!">
+                             <f:selectItems  value="#{userController.roleList}" var="_role" itemValue="#{_role}" itemLabel="#{_role.rolename}"></f:selectItems>                               
+                             <f:converter converterId="com.nz.util.ObjectConverter" />
+                         </p:selectManyMenu >
+			<h:outputText value="Street Name :"></h:outputText>
+			<p:inputText value="#{userController.newUser.address.street}" />
+
+			<h:outputText value="Suburb :"></h:outputText>
+			<p:inputText value="#{userController.newUser.address.suburb}" />
+
+			<h:outputText value="City :"></h:outputText>
+			<p:inputText value="#{userController.newUser.address.city}"/>
+
+			<h:outputText value="Country :"></h:outputText>
+			<p:inputText value="#{userController.newUser.address.country}"/>
+                    <f:facet name="footer">
+                            <p:commandButton value="Submit" update=":form:dataTable, :growl"  oncomplete=" handleSubmitRequest(xhr, status, args, 'newUserDlg','newUserForm');" actionListener="#{userController.doCreateUser}"/>
+                            <p:commandButton type="reset" value="Reset"></p:commandButton>                            
+                    </f:facet>
+                </p:panelGrid>  
+              </h:form>
+          </p:dialog> 
+      
+<p:growl id="growl" showDetail="true" life="5000" />
+         
+<script type="text/javascript">  
+    function handleSubmitRequest(xhr, status, args, dialogName, formName) {  
+            dialog = jQuery('#'+dialogName);
+        if(args.validationFailed) {  
+            dialog.effect("shake", { times:3 }, 100);  
+        } else {
+            clearForm(formName);
+            newUserDialog.hide(); 
+            userDialog.hide(); 
+        }  
+    }
+    function clearForm(formName){
+        jQuery('#'+formName).each(function(){
+	        this.reset();
+	});
+    }
+</script> 
+     </ui:define>
+</ui:composition>

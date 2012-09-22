@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="user/UserHome.xhtml" x="56" y="177" zoom="true"/>
+        <Node id="manager/ManagerHome.xhtml" x="331" y="177" zoom="true"/>
+        <Node id="admin/AdminHome.xhtml" x="748" y="125" zoom="true"/>
+        <Node id="admin/UserList.xhtml" x="112" y="372" zoom="true"/>
+        <Node id="templates/tiles/LeftMenu.xhtml" x="110" y="298" zoom="false"/>
+        <Node id="ErrorAccessDenied.xhtml" x="413" y="295" zoom="true"/>
+        <Node id="Login.xhtml" x="414" y="55" zoom="false"/>
+        <Node id="templates/layout.xhtml" x="696" y="295" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

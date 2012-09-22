@@ -1,0 +1,29 @@
+<ui:composition template="/templates/layout.xhtml"
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+>
+     <ui:define name="content">
+         <h:form styleClass="loginPanelStyle">
+                 <p:growl id="msgs" showDetail="true" sticky="false" />                        
+                <p:panelGrid columns="2">
+                <f:facet name="header">
+                    Login Panel
+                </f:facet>
+                <h:outputText value="Username : "></h:outputText>
+                <p:inputText id="username" value="#{loginController.username}" required="true" requiredMessage="Please Enter Username!" message="fc">
+                    <f:validateLength minimum="1" />  
+                </p:inputText>
+                <h:outputText value="Password : "></h:outputText>
+                <p:password id="password" value="#{loginController.password}" required="true" requiredMessage="Please Enter password!">
+                    <f:validateLength minimum="1" />  
+                </p:password>
+                <f:facet name="footer">
+                <p:commandButton value="Submit" update="msgs" actionListener="#{loginController.login}" type="submit" icon="ui-icon-check" style="margin:0"></p:commandButton>
+                </f:facet> 
+            </p:panelGrid>
+        </h:form>
+     </ui:define>
+</ui:composition>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <title>Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:growl id="messages" /> 
+            <p:menu style="width:95%" >
+                    <c:if test="#{request.isUserInRole('Administrator')}">
+                        <p:menuitem value="Home" action="/admin/AdminHome.xhtml?faces-redirect=true" ajax="false" icon="ui-icon-home" /> 
+                        <p:menuitem value="Users" action="/admin/UserList.xhtml?faces-redirect=true" ajax="false" icon="ui-icon-person"/>
+                    </c:if>
+                    <c:if test="#{request.getUserPrincipal() != null}">
+                        <p:menuitem value="Logout" action="#{loginController.logout}" icon="ui-icon-power"/>
+                    </c:if>
+                    <c:if test="#{request.getUserPrincipal() == null}">
+                        <p:menuitem value="Login" action="/Login.xhtml?faces-redirect=true" icon="ui-icon-power" />
+                    </c:if>
+            </p:menu>
+        </h:form>
+    </h:body>
+</html>

@@ -18,23 +18,10 @@
             <layout>default</layout>
             <name>Repository for library Library[eclipselink]</name>
         </repository>
-        <repository>
-            <url>http://repo1.maven.org/maven2/</url>
-            <id>junit_4</id>
-            <layout>default</layout>
-            <name>Repository for library Library[junit_4]</name>
-        </repository>
     </repositories>
     
     <name>SimpleCRUD</name>
-
-    <properties>
-        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <glassfish.embedded-static-shell.jar>C:\Program Files\glassfish-3.1.2\glassfish\lib\embedded\glassfish-embedded-static-shell.jar</glassfish.embedded-static-shell.jar>
-        <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
-    </properties>
-
+    
     <dependencies>
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
@@ -53,19 +40,6 @@
             <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
             <version>2.3.0</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.10</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.extras</groupId>
-            <artifactId>glassfish-embedded-static-shell</artifactId>
-            <version>3.1.1</version>
-            <scope>system</scope>
-            <systemPath>${glassfish.embedded-static-shell.jar}</systemPath>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
@@ -95,7 +69,6 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-    
     <build>
         <plugins>
             <plugin>

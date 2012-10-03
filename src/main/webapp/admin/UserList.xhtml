@@ -97,7 +97,7 @@
           </p:dialog> 
                          
              
-          <p:dialog header="Create New User" widgetVar="newUserDialog" resizable="false" id="newUserDlg" > 
+          <p:dialog header="Create New User" onLoad="reset()" widgetVar="newUserDialog" resizable="false" id="newUserDlg" > 
               <h:form id="newUserForm">
                 <p:panelGrid id="displayNewUser" columns="2" cellpadding="4" style="margin:0 auto;">   
 			<h:outputText value="Username :"></h:outputText>

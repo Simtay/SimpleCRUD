@@ -2,49 +2,77 @@ package com.nz.simplecrud.controller;
 
 import com.nz.simplecrud.util.DateUtility;
 import java.io.IOException;
+import java.io.Serializable;
 import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-@ManagedBean
+/**
+ * Login Controller class allows only authenticated users to log in to the web application. 
+ */
+
+@Named
 @SessionScoped
-public class LoginController {
+public class LoginController implements Serializable {
 	
 	private String username;
 	private String password;
 	
+        /** Creates a new instance of LoginController */
 	public LoginController(){
 	}
 	
+        /** Getters and Setters
+         * @return 
+         */
 	public String getUsername() {
 		return username;
 	}
-	public void setUsername(String username) {
+	/**
+     *
+     * @param username
+     */
+    public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getPassword() {
+	/**
+     *
+     * @return
+     */
+    public String getPassword() {
 		return password;
 	}
-	public void setPassword(String password) {
+	/**
+     *
+     * @param password
+     */
+    public void setPassword(String password) {
 		this.password = password;
 	}
 	
+        /**
+         * Listen for button clicks on the #{loginController.login} action, 
+         * validates the username and password entered by the user and
+         * navigates to the appropriate page.
+         * @param actionEvent 
+         */
 	public void login(ActionEvent actionEvent){
+          
                 FacesContext context = FacesContext.getCurrentInstance();  
-		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-                request.getContextPath();
-                
+		HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();                
 		try {
                     	String navigateString = "";
+                        // Checks if username and password are valid if not throws a ServletException
 			request.login(username, password);
+                        // gets the user principle and navigates to the appropriate page
 			Principal principal = request.getUserPrincipal();
 			if(request.isUserInRole("Administrator")){
 				navigateString = "/admin/AdminHome.xhtml";
@@ -61,10 +89,15 @@ public class LoginController {
                             context.addMessage(null, new FacesMessage("Error!", "Exception occured")); 
                         }
 		} catch (ServletException e) {
+                        Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, "IOException, Login Controller: The username or password you provided does not match our records.");
                         context.addMessage(null, new FacesMessage("Error!", "The username or password you provided does not match our records."));                        
                 }
 	}
 	
+        /**
+         * Listen for logout button clicks on the #{loginController.logout} action
+         * and navigates to login screen.
+         */
 	public void logout(){
             
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);

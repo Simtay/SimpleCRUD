@@ -127,4 +127,9 @@ public class User implements Serializable {
           else
                return false;
      }
+    
+    @Override
+    public String toString() {
+        return "com.nz.simplecrud.entity.User[ id=" + userid + " username=" + userid + " ]";
+    }
 }

@@ -11,6 +11,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
+/**
+ * Password string to SHA256 conversion utility class
+ */
 @FacesConverter("com.nz.util.SHAConverter")
 public class SHAConverter implements Converter {
 

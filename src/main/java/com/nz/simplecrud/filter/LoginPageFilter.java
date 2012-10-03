@@ -6,6 +6,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
+/**
+ *  To prevent user from going back to Login page if the user already logged in
+ */
 public class LoginPageFilter implements Filter
 {
    @Override

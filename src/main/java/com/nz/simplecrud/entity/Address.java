@@ -83,4 +83,9 @@ public class Address implements Serializable {
             return false;
         }
     }
+    
+    @Override
+    public String toString() {
+        return "com.nz.simplecrud.entity.Address[ id=" + addressid + " ]";
+    }
 }

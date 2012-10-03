@@ -75,4 +75,9 @@ public class Role implements Serializable {
                return false;
      }
     
+    @Override
+    public String toString() {
+        return "com.nz.simplecrud.entity.Role[ id=" + roleid + " ]";
+    }
+    
 }

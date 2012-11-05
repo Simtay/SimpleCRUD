@@ -5,6 +5,8 @@ import com.nz.simplecrud.entity.User;
 import com.nz.simplecrud.service.UserService;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
@@ -21,7 +23,9 @@ import org.primefaces.model.LazyDataModel;
 @Named
 @SessionScoped
 public class UserController implements Serializable  {
-	
+
+
+    private @Inject transient Logger logger;
     private @Inject UserService das;
     // Selected users that will be removed 
     private User[] selectedUsers; 
@@ -48,6 +52,7 @@ public class UserController implements Serializable  {
      */
     @PostConstruct
     public void init(){
+        logger.log(Level.INFO, "UserController is initializing");
         lazyModel = new LazyUserDataModel(das);
         roleList = das.findWithNamedQuery(Role.ALL);
     }
@@ -65,7 +70,7 @@ public class UserController implements Serializable  {
      */
     public void doUpdateUser(ActionEvent actionEvent){
             das.update(selectedUser);
-        }
+    }
         
     /**
      *
@@ -73,7 +78,7 @@ public class UserController implements Serializable  {
      */
     public void doDeleteUsers(ActionEvent actionEvent){
             das.deleteItems(selectedUsers);
-        }     
+    }     
         
     /**
      * Getters, Setters
@@ -90,7 +95,7 @@ public class UserController implements Serializable  {
      */
     public void setSelectedUser(User selectedUser) {  
             this.selectedUser = selectedUser;  
-        } 
+    } 
         
     /**
      *
@@ -98,7 +103,7 @@ public class UserController implements Serializable  {
      */
     public User[] getSelectedUsers() {  
             return selectedUsers;  
-        }  
+    }  
         
     /**
      *
@@ -106,7 +111,7 @@ public class UserController implements Serializable  {
      */
     public void setSelectedUsers(User[] selectedUsers) {  
             this.selectedUsers = selectedUsers;  
-        }
+    }
 
     /**
      *
@@ -114,7 +119,7 @@ public class UserController implements Serializable  {
      */
     public User getNewUser() {
             return newUser;
-        }
+    }
 
     /**
      *
@@ -122,7 +127,7 @@ public class UserController implements Serializable  {
      */
     public void setNewUser(User newUser) {
             this.newUser = newUser; 
-        }
+    }
        
     /**
      *
@@ -130,7 +135,7 @@ public class UserController implements Serializable  {
      */
     public LazyDataModel<User> getLazyModel() {
             return lazyModel;
-        }
+    }
 
     /**
      *
@@ -138,7 +143,7 @@ public class UserController implements Serializable  {
      */
     public List<Role> getRoleList() {
             return roleList;
-        }
+    }
 
     /**
      *
@@ -146,6 +151,6 @@ public class UserController implements Serializable  {
      */
     public void setRoleList(List<Role> roleList) {
             this.roleList = roleList;
-        }
+    }
 }
                     

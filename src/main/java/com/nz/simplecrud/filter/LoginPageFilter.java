@@ -8,12 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *  To prevent user from going back to Login page if the user already logged in
+ * @author Emre Simtay <emre@simtay.com>
  */
-public class LoginPageFilter implements Filter
-{
+public class LoginPageFilter implements Filter{
    @Override
-   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,   FilterChain filterChain) throws IOException, ServletException
-   {
+   public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,   FilterChain filterChain) throws IOException, ServletException{
        HttpServletRequest request = (HttpServletRequest) servletRequest;
        HttpServletResponse response = (HttpServletResponse) servletResponse;
 
@@ -33,13 +32,10 @@ public class LoginPageFilter implements Filter
    }
 
    @Override
-   public void destroy()
-   {
+   public void destroy(){
    }
    
    @Override
-   public void init(FilterConfig filterConfig) throws ServletException
-   {
+   public void init(FilterConfig filterConfig) throws ServletException{
    }
-
 }

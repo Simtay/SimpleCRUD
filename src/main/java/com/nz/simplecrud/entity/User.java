@@ -5,18 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
+/**
+ * 
+ * @author Emre Simtay <emre@simtay.com>
+ */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = User.ALL, query = "SELECT u FROM User u"),
+    @NamedQuery(name = User.ALL, query = "SELECT u FROM User u "),
     @NamedQuery(name = User.TOTAL, query = "SELECT COUNT(u) FROM User u")})
-public class User implements Serializable {
+public class User extends BaseEntity implements Serializable {
 
     public final static String ALL = "User.populateUsers";
     public final static String TOTAL = "User.countUsersTotal";
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userid;
-    
+       
     @Column(nullable = false, length = 50)
     private String username;
     
@@ -44,14 +45,6 @@ public class User implements Serializable {
     public User() {
         roles = new ArrayList<Role>();
         address = new Address();
-    }
-
-    public Integer getUserid() {
-        return this.userid;
-    }
-
-    public void setUserid(Integer userid) {
-        this.userid = userid;
     }
 
     public String getUsername() {
@@ -108,28 +101,5 @@ public class User implements Serializable {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
-    }
-
-    @Override
-    public int hashCode() {
-        return userid != null ? this.getClass().hashCode() + userid.hashCode() : super.hashCode();
-    }
-    
-    @Override
-     public boolean equals(Object obj) {
-          if (obj == null)
-               return false;
-          else if (!(obj instanceof User))
-               return false;
-          else if (((User) obj).userid.equals(
-                    this.userid))
-               return true;
-          else
-               return false;
-     }
-    
-    @Override
-    public String toString() {
-        return "com.nz.simplecrud.entity.User[ id=" + userid + " username=" + userid + " ]";
     }
 }

@@ -2,7 +2,7 @@ package com.nz.simplecrud.controller;
 
 import com.nz.simplecrud.entity.Role;
 import com.nz.simplecrud.entity.User;
-import com.nz.simplecrud.service.DataAccessService;
+import com.nz.simplecrud.service.UserService;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -15,49 +15,51 @@ import org.primefaces.model.LazyDataModel;
 
 /**
  * User Controller class allows users to do CRUD operations
+ * @author Emre Simtay <emre@simtay.com>
  */
 
 @Named
 @SessionScoped
 public class UserController implements Serializable  {
 	
-        private @Inject DataAccessService das;
-        // Selected users that will be removed 
-        private User[] selectedUsers; 
-        // Lazy loading user list
-        private LazyDataModel<User> lazyModel; 
-        // New user to create
-        private User newUser = new User();
-        // Selected user that will be updated
-        private User selectedUser = new User();
-        // Available role list
-        private List<Role> roleList; 
-
-        /**
-         * Default constructor
-         */
-	public UserController() {
+    private @Inject UserService das;
+    // Selected users that will be removed 
+    private User[] selectedUsers; 
+    // Lazy loading user list
+    private LazyDataModel<User> lazyModel; 
+    // Creating new user
+    private User newUser = new User();
+    // Selected user that will be updated
+    private User selectedUser = new User();
             
-	}
+    // Available role list
+    private List<Role> roleList; 
+
+    /**
+     * Default constructor
+     */
+    public UserController() {
+
+    }
+
+    /**
+     * Initializing Data Access Service for LazyUserDataModel class
+     * role list for UserContoller class
+     */
+    @PostConstruct
+    public void init(){
+        lazyModel = new LazyUserDataModel(das);
+        roleList = das.findWithNamedQuery(Role.ALL);
+    }
+
+    /**
+     * Create, Update and Delete operations
+     */
+    public void doCreateUser() {
+        das.create(newUser);
+    }
         
-        /**
-         * Initializing Data Access Service for LazyUserDataModel class
-         * role list for UserContoller class
-         */
-        @PostConstruct
-        public void init(){
-            lazyModel = new LazyUserDataModel(das);
-            roleList = das.findWithNamedQuery(Role.ALL);
-        }
-      
-        /**
-         * Create, Update and Delete operations
-         */
-        public void doCreateUser() {
-            das.create(newUser);
-        }
-        
-        /**
+    /**
      *
      * @param actionEvent
      */
@@ -65,7 +67,7 @@ public class UserController implements Serializable  {
             das.update(selectedUser);
         }
         
-        /**
+    /**
      *
      * @param actionEvent
      */
@@ -73,16 +75,16 @@ public class UserController implements Serializable  {
             das.deleteItems(selectedUsers);
         }     
         
-        /**
-         * Getters, Setters
-         * @return 
-         */
-        
-        public User getSelectedUser() {  
-            return selectedUser;  
-        }  
-        
-        /**
+    /**
+     * Getters, Setters
+     * @return 
+     */
+
+    public User getSelectedUser() {  
+        return selectedUser;  
+    }  
+
+    /**
      *
      * @param selectedUser
      */
@@ -90,7 +92,7 @@ public class UserController implements Serializable  {
             this.selectedUser = selectedUser;  
         } 
         
-        /**
+    /**
      *
      * @return
      */
@@ -98,7 +100,7 @@ public class UserController implements Serializable  {
             return selectedUsers;  
         }  
         
-        /**
+    /**
      *
      * @param selectedUsers
      */
@@ -106,7 +108,7 @@ public class UserController implements Serializable  {
             this.selectedUsers = selectedUsers;  
         }
 
-        /**
+    /**
      *
      * @return
      */
@@ -114,31 +116,31 @@ public class UserController implements Serializable  {
             return newUser;
         }
 
-        /**
+    /**
      *
      * @param newUser
      */
     public void setNewUser(User newUser) {
-            this.newUser = newUser;
+            this.newUser = newUser; 
         }
        
-        /**
+    /**
      *
-     * @return
+     * @return LazyDataModel
      */
     public LazyDataModel<User> getLazyModel() {
             return lazyModel;
         }
 
-        /**
+    /**
      *
-     * @return
+     * @return List<Role>
      */
     public List<Role> getRoleList() {
             return roleList;
         }
 
-        /**
+    /**
      *
      * @param roleList
      */

@@ -13,6 +13,7 @@ import javax.faces.convert.FacesConverter;
 
 /**
  * Password string to SHA256 conversion utility class
+ * @author Emre Simtay <emre@simtay.com>
  */
 @FacesConverter("com.nz.util.SHAConverter")
 public class SHAConverter implements Converter {

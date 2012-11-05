@@ -3,12 +3,12 @@ package com.nz.simplecrud.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 
+/**
+ * 
+ * @author Emre Simtay <emre@simtay.com>
+ */
 @Entity
-public class Address implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer addressid;
+public class Address extends BaseEntity implements Serializable {
     
     @Column(length = 50)
     private String street;
@@ -23,14 +23,6 @@ public class Address implements Serializable {
     private String country;
 
     public Address() {
-    }
-
-    public Integer getAddressid() {
-        return this.addressid;
-    }
-
-    public void setAddressid(Integer addressid) {
-        this.addressid = addressid;
     }
 
     public String getStreet() {
@@ -63,29 +55,5 @@ public class Address implements Serializable {
 
     public void setCountry(String country) {
         this.country = country;
-    }
-
-    @Override
-    public int hashCode() {
-        return addressid != null ? this.getClass().hashCode() + addressid.hashCode() : super.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        } else if (!(obj instanceof Address)) {
-            return false;
-        } else if (((Address) obj).addressid.equals(
-                this.addressid)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    @Override
-    public String toString() {
-        return "com.nz.simplecrud.entity.Address[ id=" + addressid + " ]";
     }
 }

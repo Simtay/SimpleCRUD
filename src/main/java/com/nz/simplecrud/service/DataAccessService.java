@@ -3,7 +3,6 @@ package com.nz.simplecrud.service;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -12,25 +11,34 @@ import javax.persistence.Query;
  * Implementation of the generic Data Access Service
  * All CRUD (create, read, update, delete) basic data access operations for any 
  * persistent object are performed in this class.
- * Please see this link : 
- * http://www.adam-bien.com/roller/abien/entry/generic_crud_service_aka_dao
- * @author emre.simtay@gmail.com
+ * @author Emre Simtay <emre@simtay.com>
  */
-@Stateless
-public class DataAccessService {
+
+public abstract class DataAccessService<T> {
 
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
 
     public DataAccessService() {
     }
     
+    private Class<T> type;
+
+    /**
+     * Default constructor
+     * 
+     * @param type entity class
+     */
+    public DataAccessService(Class<T> type) {
+        this.type = type;
+    }
+    
     /**
      * Stores an instance of the entity class in the database
-     * @param <T>
+     * @param T Object
      * @return 
      */
-    public <T> T create(T t) {
+    public T create(T t) {
         this.em.persist(t);
         this.em.flush();
         this.em.refresh(t);
@@ -39,12 +47,12 @@ public class DataAccessService {
 
     /**
      * Retrieves an entity instance that was previously persisted to the database 
-     * @param <T>
+     * @param T Object
      * @param id
      * @return 
      */
-    public <T> T find(Class<T> type, Object id) {
-        return (T) this.em.find(type, id);
+    public T find(Object id) {
+        return this.em.find(this.type, id);
     }
 
     /**
@@ -52,8 +60,8 @@ public class DataAccessService {
      * @param type
      * @param id 
      */
-    public void delete(Class type, Object id) {
-        Object ref = this.em.getReference(type, id);
+    public void delete(Object id) {
+        Object ref = this.em.getReference(this.type, id);
         this.em.remove(ref);
     }
 
@@ -63,7 +71,7 @@ public class DataAccessService {
      * @param items
      * @return 
      */
-    public <T> boolean deleteItems(T[] items) {
+    public boolean deleteItems(T[] items) {
         for (T item : items) {
             em.remove(em.merge(item));
         }
@@ -76,7 +84,7 @@ public class DataAccessService {
      * @param t
      * @return the object that is updated
      */
-    public <T> T update(T t) {
+    public T update(T t) {
         return (T) this.em.merge(t);
     }
 
@@ -118,7 +126,7 @@ public class DataAccessService {
      * @param type
      * @return List
      */
-    public <T> List<T> findByNativeQuery(String sql, Class<T> type) {
+    public List<T> findByNativeQuery(String sql) {
         return this.em.createNativeQuery(sql, type).getResultList();
     }
 
@@ -161,7 +169,6 @@ public class DataAccessService {
      * @return List
      */
     public List findWithNamedQuery(String namedQueryName, int start, int end) {
-        //Logger.getLogger(DataAccessService.class.getName()).log(Level.INFO, DateUtility.getCurrentDateTime() + " findWithNamedQuery:", namedQueryName);
         Query query = this.em.createNamedQuery(namedQueryName);
         query.setMaxResults(end - start);
         query.setFirstResult(start);

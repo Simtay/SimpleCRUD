@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * A simple date formatting utility class
- * @author emre.simtay@gmail.com
+ * @author Emre Simtay <emre@simtay.com>
  */
 
 public class DateUtility {

@@ -71,7 +71,7 @@ public class LazyUserDataModel extends LazyDataModel<User> implements Serializab
      */
     @Override
     public Object getRowKey(User user) {
-        return user.getUserid().toString();
+        return user.getId().toString();
     }
 
     /**
@@ -99,7 +99,7 @@ public class LazyUserDataModel extends LazyDataModel<User> implements Serializab
         if(datasource == null)
             return null;
        for(User user : datasource) {  
-           if(user.getUserid().toString().equals(rowKey))  
+           if(user.getId().toString().equals(rowKey))  
            return user;  
        }  
        return null;  

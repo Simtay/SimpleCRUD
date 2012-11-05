@@ -16,6 +16,7 @@ import javax.faces.convert.FacesConverter;
  * Usage:
  * <f:converter converterId="com.nz.util.ObjectConverter" />
  * TODO: Make it generic
+ * @author Emre Simtay <emre@simtay.com>
  */
 @FacesConverter("com.nz.util.ObjectConverter")
 public class ObjectConverter implements Converter {
@@ -30,7 +31,7 @@ public class ObjectConverter implements Converter {
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         Role role = (Role)value;
-        map.put(role.getRoleid().toString(), role);
-        return role.getRoleid().toString();
+        map.put(role.getId().toString(), role);
+        return role.getId().toString();
     }
 }

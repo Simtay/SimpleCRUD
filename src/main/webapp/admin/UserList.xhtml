@@ -14,7 +14,7 @@
                     User List
                 </f:facet>  
                 <p:column selectionMode="multiple" style="width:18px" />  
-                <p:column>
+                <p:column  sortBy="#{user.username}">
                     <f:facet name="header">
                         <h:outputText value="Username" />
                     </f:facet>
@@ -23,21 +23,21 @@
                     </p:commandLink>
                 </p:column>
 
-                <p:column>
+                <p:column sortBy="#{user.firstname}">
                     <f:facet name="header">
                         <h:outputText value="Firstname" />
                     </f:facet>
                     <h:outputText value="#{user.firstname}" />
                 </p:column>
 
-                <p:column>
+                <p:column sortBy="#{user.lastname}">
                     <f:facet name="header">
                         <h:outputText value="Lastname" />
                     </f:facet>
                     <h:outputText value="#{user.lastname}" />
                 </p:column>
 
-                <p:column>
+                <p:column sortBy="#{user.email}">
                     <f:facet name="header">
                         <h:outputText value="Email" />
                     </f:facet>

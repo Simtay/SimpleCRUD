@@ -3,7 +3,9 @@ package com.nz.simplecrud.controller;
 
 import com.nz.simplecrud.entity.User;
 import com.nz.simplecrud.service.DataAccessService;
+import com.nz.simplecrud.util.LazySorter;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import org.primefaces.model.LazyDataModel;
@@ -37,17 +39,21 @@ public class LazyUserDataModel extends LazyDataModel<User> implements Serializab
     }
 
     /**
-     * Lazy loading user list currently it does not support ordering
+     * Lazy loading user list with sorting ability
      * @param first
      * @param pageSize
      * @param sortField
      * @param sortOrder
      * @param filters
      * @return List<User>
-     */
+     */ 
     @Override
     public List<User> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String,String> filters) {
         datasource = crudService.findWithNamedQuery(User.ALL, first, first + pageSize);
+        // if sort field is not null then we sort the field according to sortfield and sortOrder parameter
+        if(sortField != null) {  
+            Collections.sort(datasource, new LazySorter(sortField, sortOrder));  
+        } 
         setRowCount(crudService.countTotalRecord(User.TOTAL));   
         return datasource;
     }

@@ -1,5 +1,6 @@
 package com.nz.simplecrud.service;
 
+import com.nz.simplecrud.entity.User;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -73,6 +74,12 @@ public abstract class DataAccessService<T> {
      */
     public boolean deleteItems(T[] items) {
         for (T item : items) {
+            if( item instanceof User){
+                User user = (User)item;
+                if(user.getId() == 1){
+                    continue;
+                }
+            }
             em.remove(em.merge(item));
         }
         return true;
@@ -84,8 +91,15 @@ public abstract class DataAccessService<T> {
      * @param t
      * @return the object that is updated
      */
-    public T update(T t) {
-        return (T) this.em.merge(t);
+    public T update(T item) {
+        if( item instanceof User){
+                User user = (User)item;
+                if(user.getId() == 1){
+                    return item;
+                }
+            }
+        return (T) this.em.merge(item);
+        
     }
 
     /**

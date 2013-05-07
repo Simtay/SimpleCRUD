@@ -5,7 +5,7 @@
      xmlns:ui="http://java.sun.com/jsf/facelets"
      xmlns:p="http://primefaces.org/ui">
      <ui:define name="content">
-         <h:form id="form" onLoad="reset()">
+         <h:form id="form">
                 <p:dataTable id="dataTable" var="user" value="#{userController.lazyModel}" styleClass="userDataTableStyle"
                         paginator="true" rows="10" selection="#{userController.selectedUsers}"
                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -43,12 +43,6 @@
                     </f:facet>
                     <h:outputText value="#{user.email}" />
                 </p:column>
-               <!--  <p:column>
-                    <f:facet name="header">
-                        <h:outputText value="Role name" />
-                    </f:facet>
-                    <h:outputText value="#{user.role.rolename}" /> 
-                </p:column> -->
                <f:facet name="footer">
                     <p:commandButton value="New User" oncomplete="newUserDialog.show()" icon="ui-icon-star" title="Creates new user"/>
                     <p:commandButton value="Delete Users" actionListener="#{userController.doDeleteUsers}" update="dataTable" icon="ui-icon-trash"/>
@@ -97,7 +91,7 @@
           </p:dialog> 
                          
              
-          <p:dialog header="Create New User" onLoad="reset()" widgetVar="newUserDialog" resizable="false" id="newUserDlg" > 
+          <p:dialog header="Create New User" widgetVar="newUserDialog" resizable="false" id="newUserDlg" > 
               <h:form id="newUserForm">
                 <p:panelGrid id="displayNewUser" columns="2" cellpadding="4" style="margin:0 auto;">   
 			<h:outputText value="Username :"></h:outputText>

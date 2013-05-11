@@ -8,10 +8,12 @@ import javax.persistence.MappedSuperclass;
 
 /**
  * Super Entity class
+ *
  * @author Emre Simtay <emre@simtay.com>
  */
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,24 +36,20 @@ public abstract class BaseEntity implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        
-        if (obj == null){
-             return false;
-        }
-        else if (!(obj instanceof BaseEntity)){
-             return false;
-        }
-        else if (((BaseEntity) obj).id.equals(this.id)){
-             return true;
-        }
-        else{
-             return false;
+
+        if (obj == null) {
+            return false;
+        } else if (!(obj instanceof BaseEntity)) {
+            return false;
+        } else if (((BaseEntity) obj).id.equals(this.id)) {
+            return true;
+        } else {
+            return false;
         }
     }
 
     @Override
     public String toString() {
-        return "com.nz.simplecrud.entity[ id=" + id + " ]";
+        return "entity." + this.getClass() + "[ id=" + id + " ] ";
     }
-    
 }

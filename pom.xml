@@ -120,6 +120,6 @@
         <primefaces-version>3.4.2</primefaces-version>        
         <primefaces-themes-artifact>afterwork</primefaces-themes-artifact>
         <primefaces-themes-version>1.0.8</primefaces-themes-version>
-
+        <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
     </properties>
 </project>
